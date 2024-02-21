@@ -11,7 +11,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Game has started");
-        while (gameManager.isGameCompleted((TicTacToeBoard) tictactoe)) {
+        while (!gameManager.isGameCompleted((TicTacToeBoard) tictactoe)) {
             System.out.print("Row = ");
             int row = sc.nextInt();
             System.out.print("Col = ");

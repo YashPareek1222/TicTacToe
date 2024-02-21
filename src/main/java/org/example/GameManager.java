@@ -18,69 +18,84 @@ public class GameManager {
 
     public boolean isGameCompleted(TicTacToeBoard board) {
         //Check for win in row
-        boolean rowResult = true;
+        boolean rowResult;
+        String cell = null;
         for (int i=0; i<3; i++) {
-            String cell = board.getCell(new Cell(i,0));
+            cell = board.getCell(new Cell(i,0));
+            rowResult = cell!=null;
             for (int j=0; j<3; j++) {
                 if (cell == null) {
-                    j++;
-                    continue;
+                    break;
                 }
                 if (!cell.equals(board.getCell(new Cell(i,j)))) {
                     rowResult = false;
                     break;
                 }
             }
+            if (rowResult) {
+                System.out.println("Game Over!! Winner is " + cell);
+                return true;
+            }
         }
 
+
         //Check for win in column
-        boolean colResult = true;
+        boolean colResult;
         for (int i=0; i<3; i++) {
-            String cell = board.getCell(new Cell(0,i));
+            cell = board.getCell(new Cell(0,i));
+            colResult = cell!=null;
             for (int j=0; j<3; j++) {
                 if (cell == null) {
-                    i++;
-                    continue;
+                    break;
                 }
                 if (!cell.equals(board.getCell(new Cell(j, i)))) {
                     colResult = false;
                     break;
                 }
             }
+            if (colResult) {
+                System.out.println("Game Over!! Winner is " + cell);
+                return true;
+            }
         }
 
         //Check for diagonal win
-        boolean diagonalResult = true;
+        boolean diagonalResult = false;
         for (int i=0; i<3; i++) {
-            String cell = board.getCell(new Cell(0,0));
+            cell = board.getCell(new Cell(0,0));
+            diagonalResult = cell!=null;
             for (int j=0; j<3; j++) {
                 if (cell == null) {
-                    i++;
-                    continue;
+                    break;
                 }
-                if ( (i+j)==2 && !cell.equals(board.getCell(new Cell(j,i)))) {
+                if ( (i==j) && !cell.equals(board.getCell(new Cell(i,j)))) {
                     diagonalResult = false;
                     break;
                 }
             }
         }
+        if (diagonalResult) {
+            System.out.println("Game Over!! Winner is " + cell);
+            return true;
+        }
 
         //Check for reverse diagonal win
-        boolean revdiagonalResult = true;
+        boolean revdiagonalResult;
         for (int i=0; i<3; i++) {
-            String cell = board.getCell(new Cell(0,2));
+            cell = board.getCell(new Cell(0,2));
+            revdiagonalResult = cell!=null;
             for (int j=0; j<3; j++) {
                 if (cell == null) {
-                    i++;
-                    continue;
+                    break;
                 }
-                if ( (i+j)==2 && !cell.equals(board.getCell(new Cell(j,i)))) {
+                if ( (i+j)==2 && !cell.equals(board.getCell(new Cell(i,j)))) {
                     revdiagonalResult = false;
                     break;
                 }
             }
+            if(!revdiagonalResult) return false;
         }
-
-        return rowResult || colResult || diagonalResult || revdiagonalResult;
+        System.out.println("Game Over revdiag!! Winner is " + cell);
+        return true;
     }
 }
